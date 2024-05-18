@@ -17,8 +17,10 @@ services:
     depends_on:
       - selenium-hub
     volumes:
-      - ./tests:/tests  # ローカルのtestsディレクトリをコンテナの/testsにマウント
-      - ./logs:/logs    # ローカルのlogsディレクトリをコンテナの/logsにマウント
+      - ./tests:/usr/src/app/tests  # ローカルのtestsディレクトリをコンテナの/usr/src/app/testsにマウント
+      - ./logs:/usr/src/app/logs    # ローカルのlogsディレクトリをコンテナの/usr/src/app/logsにマウント
+    ports:
+      - "5900:5900"  # VNCポートを公開
 
   firefox:
     build:
@@ -31,6 +33,8 @@ services:
     depends_on:
       - selenium-hub
     volumes:
-      - ./tests:/tests  # ローカルのtestsディレクトリをコンテナの/testsにマウント
-      - ./logs:/logs    # ローカルのlogsディレクトリをコンテナの/logsにマウント
+      - ./tests:/usr/src/app/tests  # ローカルのtestsディレクトリをコンテナの/usr/src/app/testsにマウント
+      - ./logs:/usr/src/app/logs    # ローカルのlogsディレクトリをコンテナの/usr/src/app/logsにマウント
+    ports:
+      - "5901:5900"  # VNCポートを公開
 

@@ -1,4 +1,5 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
+const fs = require('fs');
 const winston = require('winston');
 
 // ログ設定
@@ -11,7 +12,7 @@ const logger = winston.createLogger({
         })
     ),
     transports: [
-        new winston.transports.File({ filename: '/logs/test_log.log' })
+        new winston.transports.File({ filename: '/usr/src/app/logs/test_log.log' })
     ]
 });
 
@@ -31,7 +32,15 @@ const logger = winston.createLogger({
 
         logger.info('Checking search results');
         await driver.wait(until.titleContains('Selenium'), 3000);
-        logger.info('Test passed: "Selenium" found in title');
+
+        logger.info('Taking screenshot');
+        let screenshot = await driver.takeScreenshot();
+        try {
+            fs.writeFileSync('/usr/src/app/logs/screenshot.png', screenshot, 'base64');
+            logger.info('Screenshot saved successfully');
+        } catch (e) {
+            logger.error(`Failed to save screenshot: ${e}`);
+        }
     } catch (e) {
         logger.error(`Test failed: ${e}`);
     } finally {
