@@ -1,0 +1,20 @@
+# ベースイメージとして公式のSelenium Node Chromeイメージを使用
+FROM selenium/node-chrome:3.141.59
+
+# Node.js 20系をインストール
+USER root
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# 作業ディレクトリを設定
+WORKDIR /usr/src/app
+
+# 依存関係のインストール
+COPY package*.json ./
+RUN npm install
+
+# アプリケーションのソースコードをコピー
+COPY . .
+
+# デフォルトのコマンドは削除（テストスクリプトの実行は手動で行うため）
+

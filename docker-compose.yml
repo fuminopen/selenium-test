@@ -7,7 +7,9 @@ services:
       - "4444:4444"
 
   chrome:
-    image: selenium/node-chrome:3.141.59
+    build:
+      context: .
+      dockerfile: Dockerfile.chrome
     container_name: chrome
     environment:
       - HUB_HOST=selenium-hub
@@ -19,7 +21,9 @@ services:
       - ./logs:/logs    # ローカルのlogsディレクトリをコンテナの/logsにマウント
 
   firefox:
-    image: selenium/node-firefox:3.141.59
+    build:
+      context: .
+      dockerfile: Dockerfile.firefox
     container_name: firefox
     environment:
       - HUB_HOST=selenium-hub
